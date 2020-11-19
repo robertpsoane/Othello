@@ -4,6 +4,8 @@
 import pygame
 from Controllers.gamecontroller import GameController
 
+
+
 ############
 # Global Variables
 COLOUR = {
@@ -33,19 +35,16 @@ def othello():
     game_controller = GameController(screen)
 
     ### Setting up game loop
-    run_me = True
-
-    while run_me:
+    while game_controller.run:
         # Limit frame rate
         clock.tick(MAXFPS)
 
         # Get/action events
         for event in pygame.event.get():
+            game_controller.actionEvent(event)
 
-            if event.type == pygame.QUIT:
-                # Detecting user pressing quit button, if X pressed,
-                # break loop and quit screen.
-                run_me = False
+        # Update States
+        game_controller.update()
 
         # Refresh screen
         game_controller.display()

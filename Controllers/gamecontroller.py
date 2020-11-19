@@ -1,7 +1,11 @@
 ''' Game Controller class
 '''
 
-from Views.boardview import BoardView
+import pygame
+
+from Views.gameview import GameView
+
+
 
 class GameController():
     
@@ -10,20 +14,37 @@ class GameController():
         self.screen = screen
 
         self.setupModel()
-        self.setupView()
-           
+        self.game_view = GameView(screen)
 
-    def setupView(self):
-        ''' setupView - Sets up initial view
-        '''
-        # Setup board view
-        self.board = BoardView(self.screen)
+        self.run = True
 
-        # Setup initial four pieces
 
     def setupModel(self):
         pass
 
+    def setupStartPieces(self):
+        self.placePiece('b', (150, 150))
+
+    
+
+    def actionEvent(self, event):
+        if event.type == pygame.QUIT:
+                # Detecting user pressing quit button, if X pressed,
+                # break loop and quit screen.
+                self.run = False
+        elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            event_x = event.pos[0]
+            event_y = event.pos[1]
+            pixel_to_board = self.game_view.pixel_to_board(event_x, event_y)
+            if pixel_to_board[0]:
+                print(pixel_to_board)
+            else:
+                print('out of range')
+
+    def update(self):
+        self.game_view.update()
+
     def display(self):
-        self.board.display()
+        self.game_view.display()
+
 
