@@ -14,7 +14,7 @@ def getDiscGraphics():
     for y in range(2):
         for x in range(5):
         
-            ith_sprite = sprite_sheet.image_at((x, y), (100, 100), (0, 255, 0))
+            ith_sprite = sprite_sheet.image_at((y, x), (100, 100), (0, 255, 0))
             
             scaled_size = (45, 45) 
 
@@ -24,12 +24,6 @@ def getDiscGraphics():
             )
             sprites.append(scaled)
     return sprites[:-1]
-
-
-
-
-
-
 
 
 class SpriteSheet():

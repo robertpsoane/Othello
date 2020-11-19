@@ -4,8 +4,8 @@
 import pygame
 
 class DiscView(pygame.sprite.Sprite):
-    ANIMATION_SEQUENCE = {'b':('+',8),'w':('-',0)}
-    FRAME_UPDATE = 5
+    ANIMATION_SEQUENCE = {'b':('-',0),'w':('+',8)}
+    FRAME_UPDATE = 3
 
     def __init__(self, screen, position, colour, sprites):
         pygame.sprite.Sprite.__init__(self)
@@ -40,6 +40,7 @@ class DiscView(pygame.sprite.Sprite):
         if self.target_frame == self.current_frame:
             return
         if self.update_count < self.FRAME_UPDATE:
+            self.update_count += 1
             return
         self.update_count = 0
         self.incrementFrame()

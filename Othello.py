@@ -29,6 +29,7 @@ def othello():
 
     ### Setting up Screen and clock
     screen = pygame.display.set_mode(DIMS)
+    pygame.display.set_caption(GAME_NAME)
     clock = pygame.time.Clock()
     ########
 
