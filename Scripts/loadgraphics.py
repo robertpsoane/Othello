@@ -14,9 +14,9 @@ def getDiscGraphics():
     for y in range(2):
         for x in range(5):
         
-            ith_sprite = sprite_sheet.image_at((y, x), (100, 100), (0, 255, 0))
+            ith_sprite = sprite_sheet.image_at((y, x), (500, 500), (0, 255, 0))
             
-            scaled_size = (45, 45) 
+            scaled_size = (50, 50) 
 
             scaled = pygame.transform.scale(
                 ith_sprite,
