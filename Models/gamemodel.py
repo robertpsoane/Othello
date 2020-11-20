@@ -81,10 +81,10 @@ class GameModel():
             for j in range(8):
                 row.append('.')
             board.append(row)
-        board[CENTRE_LEFT][CENTRE_LEFT] = 'b'
-        board[CENTRE_RIGHT][CENTRE_RIGHT] = 'b'
-        board[CENTRE_LEFT][CENTRE_RIGHT] = 'w'
-        board[CENTRE_RIGHT][CENTRE_LEFT] = 'w'
+        board[CENTRE_LEFT][CENTRE_LEFT] = 'w'
+        board[CENTRE_RIGHT][CENTRE_RIGHT] = 'w'
+        board[CENTRE_LEFT][CENTRE_RIGHT] = 'b'
+        board[CENTRE_RIGHT][CENTRE_LEFT] = 'b'
         self.board = board
         
 
@@ -95,10 +95,10 @@ class GameModel():
         TODO Needs refactoring with function above to minimise redundancy.
         '''
         initial_pieces = [
-            (CENTRE_LEFT, CENTRE_LEFT, 'b'),
-            (CENTRE_RIGHT, CENTRE_RIGHT, 'b'),
-            (CENTRE_RIGHT, CENTRE_LEFT, 'w'),
-            (CENTRE_LEFT, CENTRE_RIGHT, 'w')
+            (CENTRE_LEFT, CENTRE_LEFT, 'w'),
+            (CENTRE_RIGHT, CENTRE_RIGHT, 'w'),
+            (CENTRE_RIGHT, CENTRE_LEFT, 'b'),
+            (CENTRE_LEFT, CENTRE_RIGHT, 'b')
         ]
         return initial_pieces
 
