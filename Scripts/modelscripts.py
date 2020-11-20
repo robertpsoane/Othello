@@ -1,4 +1,10 @@
-''' Scripts to be used by game model
+''' Model scripts
+
+These scripts are used by the game model at on load to generate global 
+variables which it will use throughout the game.
+
+I have put them in a separate file to keep the model code looking tidier.
+
 '''
 
 

@@ -1,14 +1,25 @@
 ''' Game Model class
 
+Represents the model of the game, carries out logic and 'understands' rules
+of the game.
+
 '''
 
 import copy
 from Scripts.modelscripts import *
 
 class GameModel():
+    ''' GameModel()
+    Main model class.
+    '''
     opponent = {'b':'w','w':'b'}
     
     def __init__(self):
+        ''' __init__
+
+        Sets up main variables used by the GameModel, and prepares for first
+        move.
+        '''
         self.makeBoard()
         self.turn = 'b'
         self.move_list = self.generateMoveList( self.board,
@@ -18,6 +29,16 @@ class GameModel():
         self.passed = False
 
     def getStatus(self):
+        ''' getStatus
+
+        Returns status dictionary.  This is used to convey whether game is
+        complete, current number of pieces owned by each side, and who's turn
+        it is.  This may be extended to convey more information.
+
+        This is called by the Controller after each move has been made to
+        update it.  This also avoids the need for the controller to check 
+        whether a turn has been passed.
+        '''
         count = self.countPieces()
         status =  {
             'turn': self.turn,
@@ -28,11 +49,32 @@ class GameModel():
         return status
 
     def changeTurn(self):
+        ''' changeTurn
+        Moves to next players turn and generates a new move list of possible
+        moves.
+        '''
         self.turn =  self.opponent[self.turn]
         self.move_list = self.generateMoveList(self.board, self.turn,
                                                     self.opponent[self.turn])
 
     def makeBoard(self):
+        ''' makeBoard
+
+        Generates matrix representation of Othello board in its initial form.
+        The board is represented as so:
+        [
+            ['.', '.', '.', '.', '.', '.', '.', '.'],
+            ['.', '.', '.', '.', '.', '.', '.', '.'],
+            ['.', '.', '.', '.', '.', '.', '.', '.'],
+            ['.', '.', '.', 'b', 'w', '.', '.', '.'],
+            ['.', '.', '.', 'w', 'b', '.', '.', '.'],
+            ['.', '.', '.', '.', '.', '.', '.', '.'],
+            ['.', '.', '.', '.', '.', '.', '.', '.'],
+            ['.', '.', '.', '.', '.', '.', '.', '.']
+        ]
+        This is using the same representation as on the CLI based Othello 
+        project.
+        '''
         board = []
         for i in range(8):
             row = []
@@ -44,8 +86,14 @@ class GameModel():
         board[CENTRE_LEFT][CENTRE_RIGHT] = 'w'
         board[CENTRE_RIGHT][CENTRE_LEFT] = 'w'
         self.board = board
+        
 
     def getInitialSetup(self):
+        ''' getInitialSetup
+
+        returns list of pieces to place on board at start of game.
+        TODO Needs refactoring with function above to minimise redundancy.
+        '''
         initial_pieces = [
             (CENTRE_LEFT, CENTRE_LEFT, 'b'),
             (CENTRE_RIGHT, CENTRE_RIGHT, 'b'),
@@ -55,6 +103,12 @@ class GameModel():
         return initial_pieces
 
     def generateMoveList(self, board, player, opponent):
+        ''' generateMoveList
+        
+        Generates a list of possible moves for a given board and player.  
+        Returns as matrix instead of assigning to self as it will be used by
+        AI model when working the minimax algorithm.
+        '''
         move_list = []
         end_points = []
         for i in range(8):
@@ -73,6 +127,12 @@ class GameModel():
         return move_list
     
     def pointMove(self, board, player, opponent, i, j):
+        ''' pointMove
+
+        Given a position occupied by an opponents colour, checks all 
+        surrounding empty squares as to whether the current player can place a
+        piece there.
+        '''
         point_moves = []
         end_points = []
         for i_shift in SHIFTS:
@@ -88,6 +148,11 @@ class GameModel():
         return point_moves, end_points
 
     def canPlace(self, board, player, opponent, empty_square, opponent_square):
+        ''' canPlace
+
+        Called form point move to determine whether a piece can be played at 
+        a given position.
+        '''
         opponent_i, opponent_j = opponent_square[0], opponent_square[1]
         empty_i, empty_j = empty_square[0], empty_square[1]
         step = (opponent_i - empty_i, opponent_j - empty_j)
@@ -101,6 +166,11 @@ class GameModel():
         return (False, [])
 
     def makeMove(self, board, player, opponent, move):
+        ''' makeMove
+
+        Returns a board after which a move has been made, and a list of
+        pieces which are taken as a result.
+        '''
         board = copy.deepcopy(board)
         index_move = (GRID['G2I']['row'][move[0]], GRID['G2I']['col'][move[1]])
         i, j = index_move[0], index_move[1]
@@ -111,6 +181,10 @@ class GameModel():
         return board, taken_list
 
     def listTakenPieces(self, board, player, opponent, move):
+        ''' listTakenPieces
+
+        Returns a list of pieces to take for a given move.
+        '''
         i, j = move[0], move[1]
         taken = []
         for i_shift in SHIFTS:
@@ -136,6 +210,10 @@ class GameModel():
         return taken_list
 
     def takePieces(self, board, player, opponent, move):
+        ''' takePieces
+
+        Takes all pieces on the taken_list within the model.
+        '''
         taken_list = self.listTakenPieces(board, player, opponent, move)
         if taken_list == []:
             print('broken')
@@ -145,6 +223,11 @@ class GameModel():
         return board, taken_list
 
     def tryTake(self, move):
+        ''' tryTake
+        
+        Attempt to make a given move.  If possible, make the move and return
+        all pieces to take, if not possible return false.
+        '''
         index_move = (GRID['I2G']['row'][str(move[0])], GRID['I2G']['col'][str(move[1])])
         if (index_move in self.move_list) == False:
             return False, ()
@@ -159,6 +242,10 @@ class GameModel():
         return True, taken_pieces
     
     def checkWinConditions(self):
+        ''' checkWinConditions
+        
+        Recursively check if the game is over. 
+        '''
         if (self.passed == True) and len(self.move_list) == 0:
             self.game_complete = True
         elif len(self.move_list) == 0:
@@ -167,6 +254,10 @@ class GameModel():
             self.checkWinConditions()
 
     def countPieces(self):
+        ''' countPieces
+
+        Count number of pieces on board of each player
+        '''
         b = 0
         w = 0
         for i in range(8):
@@ -176,3 +267,4 @@ class GameModel():
                 elif self.board[i][j] == 'w':
                     w += 1
         return b, w
+        

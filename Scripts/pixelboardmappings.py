@@ -1,6 +1,7 @@
 ''' 
 Scripts to map between pixels and boards
-
+These functions are used to create and map between pixels and 0-7 grid 
+references.
 '''
 EDGE_BORDER = 7
 UPPER_BORDER = 55

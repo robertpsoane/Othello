@@ -1,4 +1,9 @@
 ''' Load Graphics script
+
+Script to load grpahics for othello discs.  This is run when DiscView is 
+imported so that key graphics are loaded once globally at the beginning of the
+game
+
 '''
 
 import pygame
@@ -8,6 +13,11 @@ DISC_SPRITE_SHEET_LOCATION = 'Graphics/DiscSpriteSheet.png'
 
 
 def getDiscGraphics():
+    ''' getDiscGraphics - Sets up a SpriteSheet object loading the disc sprite
+    sheet.  Returns list of 9 graphics.  Index 0 being a stationary black 
+    disc, index 8 being a stationary white disc, and each index in between
+    being a frame in the flip animation.
+    '''
     sprite_sheet = SpriteSheet(DISC_SPRITE_SHEET_LOCATION)
     
     sprites = []
