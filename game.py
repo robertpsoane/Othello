@@ -22,7 +22,7 @@ DIMS = WIDTH, HEIGHT
 
 MAXFPS = 60
 
-GAME_NAME = 'Othello v1'
+GAME_NAME = 'Othello v2'
 
 ############
 def othello(game_type = 'pvp'):

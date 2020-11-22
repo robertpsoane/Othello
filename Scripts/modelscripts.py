@@ -66,19 +66,11 @@ OFF_CORNERS = [(1, 0), (0, 1), (1, 1),
 EDGES = []
 for i in [0, 7]:
     for j in range(8):
-        edge_space = (
-                    GRID['I2G']['col'][str(i)],
-                    GRID['I2G']['row'][str(j)]
-                    )
-        EDGES.append(edge_space)
+        EDGES.append((i, j))
 
 for j in [0, 7]:
     for i in range(8):
-        edge_space = (
-                    GRID['I2G']['col'][str(i)],
-                    GRID['I2G']['row'][str(j)]
-                    )
-        EDGES.append(edge_space)
+        EDGES.append((i, j))
 
 EDGES = list(set(EDGES))
 CORNER_BONUS = 30
