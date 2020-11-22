@@ -32,6 +32,7 @@ This game comes with 3 game modes:
 The engine is playing using a minimax strategy (currently set at depth 5).
 It attempts to follow the tactics listed above.  It does this by minimising future moves for its opponent, while maximising them for itself, then applying a points-based grading strategy to the board for each leaf of the tree.
 The grading strategy is as follows:
+```
 [   [10, -2, 2, 2, 2, 2, -2, 10],
     [-2, -2, 1, 1, 1, 1, 1, -2],
     [2, 1, 1, 1, 1, 1, 1, 2],
@@ -40,5 +41,7 @@ The grading strategy is as follows:
     [2, 1, 1, 1, 1, 1, 1, 2],
     [-2, -2, 1, 1, 1, 1, -2, -2],
     [10, -2, 2, 2, 2, 2, -2, 10]]
+```
+    
 The points are centered around 0, with a positive score meaning the engine has
 the advantage, and a negative score meaning the player has an advantage.
