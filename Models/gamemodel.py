@@ -232,15 +232,19 @@ class GameModel():
         Attempt to make a given move.  If possible, make the move and return
         all pieces to take, if not possible return false.
         '''
-        index_move = (GRID['I2G']['row'][str(move[0])], GRID['I2G']['col'][str(move[1])])
-        if (index_move in self.move_list) == False:
-            return False, ()
-        new_board, taken_pieces = self.makeMove(self.board,
-                                                    self.turn,
-                                                    self.opponent[self.turn],
-                                                    index_move)
-        self.passed = False
-        self.board = new_board
+
+        if move != 'pass':
+            index_move = (GRID['I2G']['row'][str(move[0])], GRID['I2G']['col'][str(move[1])])
+            if (index_move in self.move_list) == False:
+                return False, ()
+            new_board, taken_pieces = self.makeMove(self.board,
+                                                        self.turn,
+                                                        self.opponent[self.turn],
+                                                        index_move)
+            self.passed = False
+            self.board = new_board
+        else:
+            self.passed = True
         self.changeTurn()
         self.checkWinConditions()
         return True, taken_pieces
