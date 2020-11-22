@@ -13,7 +13,7 @@ class GameModel():
     Main model class.
     '''
     opponent = {'b':'w','w':'b'}
-    
+    DIMS = 8
     def __init__(self):
         ''' __init__
 
@@ -44,7 +44,8 @@ class GameModel():
             'turn': self.turn,
             'b': count[0],
             'w': count[1],
-            'complete': self.game_complete
+            'complete': self.game_complete,
+            'moves': self.move_list
         }
         return status
 
@@ -113,17 +114,20 @@ class GameModel():
         end_points = []
         for i in range(8):
             for j in range(8):
-                if board[i][j] == opponent:
-                    possible_moves = self.pointMove(board, player, opponent, i, j)
-                    moves, end_points_ij = possible_moves[0], possible_moves[1]
-                    for move in moves:
-                        grid_move = (
-                            GRID['I2G']['row'][str(move[0])],
-                            GRID['I2G']['col'][str(move[1])]
-                        )
-                        move_list.append(grid_move)
-                    for end_point in end_points_ij:
-                        end_points.append(end_point)
+                try:   
+                    if board[i][j] == opponent:
+                        possible_moves = self.pointMove(board, player, opponent, i, j)
+                        moves, end_points_ij = possible_moves[0], possible_moves[1]
+                        for move in moves:
+                            grid_move = (
+                                GRID['I2G']['row'][str(move[0])],
+                                GRID['I2G']['col'][str(move[1])]
+                            )
+                            move_list.append(grid_move)
+                        for end_point in end_points_ij:
+                            end_points.append(end_point)
+                except:
+                    print('BROKEN')
         return move_list
     
     def pointMove(self, board, player, opponent, i, j):

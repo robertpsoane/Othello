@@ -5,6 +5,7 @@ import pygame
 
 from Views.gameview import GameView
 from Models.gamemodel import GameModel
+from Models.aiplayermodel import AIPlayer
 
 class GameController():
     
@@ -24,9 +25,9 @@ class GameController():
         self.getStatus()
         self.changeStrings()
         if self.game_type == 'b':
-            print('b')
+            self.ai_player = AIPlayer('w', self.game_model)
         elif self.game_type == 'w':
-            print('w')
+            self.ai_player = AIPlayer('b', self.game_model)
 
     def setupStartPieces(self):
         initial_setup = self.game_model.getInitialSetup()
@@ -89,8 +90,17 @@ class GameController():
     def update(self):
         model_status = self.game_model.getStatus()
         self.game_view.update()
+        if self.game_type == 'b' or self.game_type == 'w':
+            self.getAIMove()
 
     def display(self):
         self.game_view.display()
+
+    def getAIMove(self):
+        if self.status['turn'] == self.game_type:
+            return
+        moves = self.status['moves']
+        move = self.ai_player.getMoveInput(moves, self.game_model.board)
+        self.tryMakeMove(move)
 
 
