@@ -5,11 +5,13 @@ controls the view for the game
 '''
 
 
-from Views.boardview import BoardView
+from Views.backgroundview import BackgroundView
 from Views.discview import DiscView
 from Views.stringview import StringView
 from Scripts.loadgraphics import getDiscGraphics
 from Scripts.pixelboardmappings import *
+
+board_location = 'Graphics/Board.png'
 
 class GameView():
 
@@ -19,7 +21,7 @@ class GameView():
         self.screen = screen
 
         # Setup board view
-        self.board = BoardView(self.screen)
+        self.board = BackgroundView(self.screen, board_location)
 
         # Get Tile Graphics
         self.tile_graphics = getDiscGraphics()

@@ -40,3 +40,6 @@ class StringView:
 
     def changeText(self, string):
         self.surf = self.font.render(string, True, self.colour)
+    
+    def changeColour(self, colour):
+        self.surf = self.font.render(self.text, True, colour)

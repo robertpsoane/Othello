@@ -2,8 +2,7 @@
 '''
 
 import pygame
-from Controllers.gamecontroller import GameController
-
+from Controllers.menucontroller import MenuController
 
 
 ############
@@ -24,33 +23,29 @@ MAXFPS = 60
 
 GAME_NAME = 'Othello v1'
 
-############
-def othello():
 
-    ### Setting up Screen and clock
-    screen = pygame.display.set_mode(DIMS)
-    pygame.display.set_caption(GAME_NAME)
-    clock = pygame.time.Clock()
-    ########
 
-    game_controller = GameController(screen)
+### Setting up Screen and clock
+screen = pygame.display.set_mode(DIMS)
+pygame.display.set_caption(GAME_NAME)
+clock = pygame.time.Clock()
+########
 
-    ### Setting up game loop
-    while game_controller.run:
-        # Limit frame rate
-        clock.tick(MAXFPS)
+menu_controller = MenuController(screen)
 
-        # Get/action events
-        for event in pygame.event.get():
-            game_controller.actionEvent(event)
+### Setting up game loop
+while menu_controller.run:
+    # Limit frame rate
+    clock.tick(MAXFPS)
 
-        # Update States
-        game_controller.update()
+    # Get/action events
+    for event in pygame.event.get():
+        menu_controller.actionEvent(event)
 
-        # Refresh screen
-        game_controller.display()
-        
-        pygame.display.flip()
+    # Update screen
+    menu_controller.update()
 
-#### COMMENT BELOW OUT - only here for testing purposes now :)
-othello()
+    # Refresh screen
+    menu_controller.display()
+    
+    pygame.display.flip()

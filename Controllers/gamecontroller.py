@@ -8,11 +8,13 @@ from Models.gamemodel import GameModel
 
 class GameController():
     
-    def __init__(self, screen):
+    def __init__(self, screen, game_type):
         # Storing useful variables to controller
         self.screen = screen
+        self.game_type = game_type
         self.setupModelView()        
         self.run = True
+        
 
     def setupModelView(self):
         # Instantiate game view and game model
@@ -21,6 +23,10 @@ class GameController():
         self.setupStartPieces()
         self.getStatus()
         self.changeStrings()
+        if self.game_type == 'b':
+            print('b')
+        elif self.game_type == 'w':
+            print('w')
 
     def setupStartPieces(self):
         initial_setup = self.game_model.getInitialSetup()
@@ -80,12 +86,9 @@ class GameController():
             self.getStatus()
             self.changeStrings()
 
-
-
     def update(self):
         model_status = self.game_model.getStatus()
         self.game_view.update()
-
 
     def display(self):
         self.game_view.display()
